@@ -20,6 +20,16 @@ namespace Portfolio.Data
                 "Server=localhost\\SQLEXPRESS;Database=Portfolio;Integrated Security=True;TrustServerCertificate=True");
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Projets>().HasOne(i => i.Categorie);
+            
+            modelBuilder.Entity<Projets>().HasOne(i => i.Images);
+            
+            base.OnModelCreating(modelBuilder);
+        }
+
         public DbSet<Projets> Projet { get; set; } = null!;
+
     }
 }
