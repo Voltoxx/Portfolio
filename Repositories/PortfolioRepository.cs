@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Portfolio.Data;
 using Portfolio.Models;
 
@@ -40,10 +41,11 @@ namespace Portfolio.Repositories
 
         //Ajouter un Projet 
 
-        public void InsertOneProject(Projets projet)
+        public ActionResult<Projets> InsertOneProject(Projets projet)
         {
             _context.Projet.Add(projet);
             _context.SaveChanges();
+            return projet;
         }
 
         //Modifier un Projet

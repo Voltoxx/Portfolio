@@ -26,7 +26,8 @@ namespace Portfolio.Controllers
 
         public IActionResult Projects()
         {
-            return View();
+            return View(GetAllProjects());
+
         }
 
         public IActionResult Contact()
@@ -76,18 +77,26 @@ namespace Portfolio.Controllers
             return _portfolioRepository.GetAllProjects();
         }
 
-        //Récupérer un projet selon sa catégorie
+        //Récupérer un projet selon sa nom
 
-        public IEnumerable<Projets> GetOneProject(string categorie)
+        public IEnumerable<Projets> GetOneProject(string title)
         {
-            return _portfolioRepository.GetOneProject(categorie);
+            return _portfolioRepository.GetOneProject(title);
+        }
+
+        //Récupérer plusieurs projets selon leur catégorie
+
+        public IEnumerable<Projets> GetOneCategory(string categorie)
+        {
+            return _portfolioRepository.GetOneCategory(categorie);
         }
 
         //Ajouter un projet 
 
-        public void InsertOneProject(Projets projet)
+        public ActionResult<Projets> InsertOneProject(Projets projet)
         {
             _portfolioRepository.InsertOneProject(projet);
+            return View("Projects");
         }
 
         //Modifier un projet 

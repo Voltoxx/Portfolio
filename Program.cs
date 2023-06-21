@@ -18,7 +18,6 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<PortfolioRepository>();
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<ApplicationDbContext>();
 
 
 var app = builder.Build();
