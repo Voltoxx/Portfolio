@@ -79,9 +79,9 @@ namespace Portfolio.Controllers
 
         //Récupérer un projet selon sa nom
 
-        public IEnumerable<Projets> GetOneProject(string title)
+        public IEnumerable<Projets> GetOneProject(int id)
         {
-            return _portfolioRepository.GetOneProject(title);
+            return _portfolioRepository.GetOneProject(id);
         }
 
         //Récupérer plusieurs projets selon leur catégorie
@@ -108,9 +108,9 @@ namespace Portfolio.Controllers
 
         //supprimer un projet 
 
-        public void DeleteOneProject(string title)
+        public void DeleteOneProject(int id)
         {
-            _portfolioRepository.DeleteOneProject(title);
+            _portfolioRepository.DeleteOneProject(id);
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Portfolio.Data;
 using Portfolio.Models;
 
@@ -34,33 +33,32 @@ namespace Portfolio.Repositories
 
         //Récupérer un Projet selon son nom
 
-        public IEnumerable<Projets> GetOneProject(string titre)
+        public IEnumerable<Projets> GetOneProject(int id)
         {
-            return _context.Projet.Where(x => x.Title == titre);
+            return _context.Projet.Where(x => x.Id == id);
         }
 
         //Ajouter un Projet 
 
-        public ActionResult<Projets> InsertOneProject(Projets projet)
+        public void InsertOneProject(Projets projet)
         {
             _context.Projet.Add(projet);
             _context.SaveChanges();
-            return projet;
         }
 
         //Modifier un Projet
 
-        public void UpdateOneProject(Projets projet)
+        public void UpdateOneProject(Projets id)
         {
-            _context.Projet.Entry(projet).State = EntityState.Modified;
+            _context.Projet.Entry(id).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
         //Supprimer un Projet
 
-        public void DeleteOneProject(string title)
+        public void DeleteOneProject(int id)
         {
-            _context.Projet.Remove(_context.Projet.First(x => x.Title == title));
+            _context.Projet.Remove(_context.Projet.First(x => x.Id == id));
             _context.SaveChanges();
         }
 
