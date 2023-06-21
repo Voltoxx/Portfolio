@@ -27,7 +27,16 @@ namespace Portfolio.Controllers
         public IActionResult Projects()
         {
             return View(GetAllProjects());
+        }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        public IActionResult Update()
+        {
+            return View();
         }
 
         public IActionResult Contact()
@@ -68,11 +77,12 @@ namespace Portfolio.Controllers
             _portfolioRepository = portfolioRepository;
         }
 
-        //Utilsation des méthodes du Repository
+		//Utilsation des méthodes du Repository
 
-        //Récupérer tout les projets
+		//Récupérer tout les projets
 
-        public IEnumerable<Projets> GetAllProjects()
+		[HttpGet("GetAllProjects")]
+		public IEnumerable<Projets> GetAllProjects()
         {
             return _portfolioRepository.GetAllProjects();
         }
@@ -101,16 +111,17 @@ namespace Portfolio.Controllers
 
         //Modifier un projet 
 
-        public void UpdateOneProject(Projets projet)
+        public void UpdateOneProject(Projets id)
         {
-            _portfolioRepository.UpdateOneProject(projet);
+            _portfolioRepository.UpdateOneProject(id);
         }
 
         //supprimer un projet 
 
-        public void DeleteOneProject(int id)
+        public ActionResult DeleteOneProject(int id)
         {
             _portfolioRepository.DeleteOneProject(id);
+            return RedirectToAction(nameof(Projects));
         }
     }
 }
