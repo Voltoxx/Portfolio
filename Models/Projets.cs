@@ -15,8 +15,8 @@ namespace Portfolio.Models
 
         public string ImagePrincipale { get; set; } = string.Empty;
 
-        public Categorie Categorie { get; set; } = null!;
+        public Categorie? Categorie { get; set; } = null!;
 
-        public Images Images { get; set; } = null!;
+        public Images? Images { get; set; } = null!;
     }
 }

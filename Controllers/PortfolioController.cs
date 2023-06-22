@@ -87,38 +87,44 @@ namespace Portfolio.Controllers
             return _portfolioRepository.GetAllProjects();
         }
 
-        //Récupérer un projet selon sa nom
+		//Récupérer un projet selon sa nom
 
-        public IEnumerable<Projets> GetOneProject(int id)
+		[HttpGet("GetOneProject")]
+		public IEnumerable<Projets> GetOneProject(int id)
         {
             return _portfolioRepository.GetOneProject(id);
         }
 
-        //Récupérer plusieurs projets selon leur catégorie
+		//Récupérer plusieurs projets selon leur catégorie
 
-        public IEnumerable<Projets> GetOneCategory(string categorie)
+		[HttpGet("GetOneCategory")]
+		public IEnumerable<Projets> GetOneCategory(string categorie)
         {
             return _portfolioRepository.GetOneCategory(categorie);
         }
 
-        //Ajouter un projet 
+		//Ajouter un projet 
 
-        public ActionResult<Projets> InsertOneProject(Projets projet)
+		[HttpPost("InsertOneProject")]
+		public ActionResult InsertOneProject(Projets projet)
         {
             _portfolioRepository.InsertOneProject(projet);
-            return View("Projects");
-        }
+            return RedirectToAction(nameof(Projects));
+		}
 
-        //Modifier un projet 
+		[HttpPost("UpdateOneProject")]
+		//Modifier un projet 
 
-        public void UpdateOneProject(Projets id)
+		public ActionResult UpdateOneProject(Projets projet)
         {
-            _portfolioRepository.UpdateOneProject(id);
+            _portfolioRepository.UpdateOneProject(projet);
+            return RedirectToAction(nameof(Projects));
         }
 
-        //supprimer un projet 
+		//supprimer un projet 
 
-        public ActionResult DeleteOneProject(int id)
+		[HttpDelete("DeleteOneProject")]
+		public ActionResult DeleteOneProject(int id)
         {
             _portfolioRepository.DeleteOneProject(id);
             return RedirectToAction(nameof(Projects));

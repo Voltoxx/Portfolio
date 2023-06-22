@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Drawing;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Portfolio.Data;
 using Portfolio.Models;
@@ -48,10 +49,16 @@ namespace Portfolio.Repositories
 
         //Modifier un Projet
 
-        public void UpdateOneProject(Projets id)
+        public void UpdateOneProject(Projets projet)
         {
-            _context.Projet.Entry(id).State = EntityState.Modified;
-            _context.SaveChanges();
+	        var change = _context.Projet.First(x => x.Id == projet.Id);
+	        change.Title = projet.Title;
+            change.Description = projet.Description;
+            change.ImagePrincipale = projet.ImagePrincipale;
+            change.Categorie = projet.Categorie;
+            change.Images = projet.Images;
+            _context.Projet.Update(change);
+	        _context.SaveChanges();
         }
 
         //Supprimer un Projet
