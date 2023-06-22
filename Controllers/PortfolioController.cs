@@ -125,7 +125,7 @@ namespace Portfolio.Controllers
 
 		//supprimer un projet 
 
-		[HttpDelete("DeleteOneProject")]
+		[HttpGet("DeleteOneProject")]
 		public ActionResult DeleteOneProject(int id)
         {
             _portfolioRepository.DeleteOneProject(id);
