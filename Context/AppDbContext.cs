@@ -4,7 +4,7 @@ using System;
 using Portfolio.Controllers;
 using Portfolio.Models;
 
-namespace Portfolio.Data
+namespace Portfolio.Context
 {
     public class ApplicationDbContext : DbContext
     {
@@ -28,6 +28,7 @@ namespace Portfolio.Data
         }
 
         public DbSet<Projets> Projet { get; set; } = null!;
+        public DbSet<Users> User { get; set; } = null!;
 
     }
 }

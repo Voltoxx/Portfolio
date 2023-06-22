@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Data;
+using Portfolio.Context;
 using Portfolio.Models;
 
 namespace Portfolio.Controllers
@@ -24,7 +24,7 @@ namespace Portfolio.Controllers
         {
               return _context.Projet != null ? 
                           View(await _context.Projet.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Projet'  is null.");
+                          Problem("Entity set 'AppDbContext.Projet'  is null.");
         }
 
         // GET: Projets/Details/5
@@ -143,7 +143,7 @@ namespace Portfolio.Controllers
         {
             if (_context.Projet == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Projet'  is null.");
+                return Problem("Entity set 'AppDbContext.Projet'  is null.");
             }
             var projets = await _context.Projet.FindAsync(id);
             if (projets != null)

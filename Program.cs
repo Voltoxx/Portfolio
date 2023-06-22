@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Data;
 using System;
+using Portfolio.Context;
 using Portfolio.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);

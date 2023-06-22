@@ -34,9 +34,11 @@ namespace Portfolio.Controllers
             return View();
         }
 
-        public IActionResult Update()
+        [HttpGet("Update/{id}")]
+        public IActionResult Update(int id)
         {
-            return View();
+	        Projets model = GetOneProject(id);
+            return View(model);
         }
 
         public IActionResult Contact()
@@ -87,10 +89,10 @@ namespace Portfolio.Controllers
             return _portfolioRepository.GetAllProjects();
         }
 
-		//Récupérer un projet selon sa nom
+		//Récupérer un projet selon son nom
 
 		[HttpGet("GetOneProject")]
-		public IEnumerable<Projets> GetOneProject(int id)
+		public Projets GetOneProject(int id)
         {
             return _portfolioRepository.GetOneProject(id);
         }

@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Portfolio.Data;
+using Portfolio.Context;
 using Portfolio.Models;
 
 namespace Portfolio.Repositories
@@ -34,9 +34,9 @@ namespace Portfolio.Repositories
 
         //Récupérer un Projet selon son nom
 
-        public IEnumerable<Projets> GetOneProject(int id)
+        public Projets GetOneProject(int id)
         {
-            return _context.Projet.Where(x => x.Id == id);
+            return _context.Projet.First(x => x.Id == id);
         }
 
         //Ajouter un Projet 
