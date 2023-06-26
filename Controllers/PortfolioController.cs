@@ -29,6 +29,11 @@ namespace Portfolio.Controllers
             return View(GetAllProjects());
         }
 
+        public IActionResult Manage()
+        {
+            return View(GetAllProjects());
+        }
+
         public IActionResult Create()
         {
             return View();
@@ -111,7 +116,7 @@ namespace Portfolio.Controllers
 		public ActionResult InsertOneProject(Projets projet)
         {
             _portfolioRepository.InsertOneProject(projet);
-            return RedirectToAction(nameof(Projects));
+            return RedirectToAction(nameof(Manage));
 		}
 
 		[HttpPost("UpdateOneProject")]
@@ -120,7 +125,7 @@ namespace Portfolio.Controllers
 		public ActionResult UpdateOneProject(Projets projet)
         {
             _portfolioRepository.UpdateOneProject(projet);
-            return RedirectToAction(nameof(Projects));
+            return RedirectToAction(nameof(Manage));
         }
 
 		//supprimer un projet 
@@ -129,7 +134,7 @@ namespace Portfolio.Controllers
 		public ActionResult DeleteOneProject(int id)
         {
             _portfolioRepository.DeleteOneProject(id);
-            return RedirectToAction(nameof(Projects));
+            return RedirectToAction(nameof(Manage));
         }
     }
 }
