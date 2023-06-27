@@ -22,14 +22,19 @@ namespace Portfolio.Controllers
 			return View();
 		}
 
+		public string GenerateToken(Users user)
+		{
+			return _userRepository.GenerateToken(user);
+		}
+
 		public bool IsAdmin(Users user)
 		{
 			return _userRepository.IsAdmin(user);
 		}
 
-		public bool IsConnect(/*le jeton*/)
+		public bool IsConnect(string token)
 		{
-			return _userRepository.IsConnect(/*le jeton*/);
+			return _userRepository.IsConnect(token);
 		}
 
 		public ActionResult Register(Users user)
