@@ -18,33 +18,60 @@ namespace Portfolio.Repositories
 	        this._context = context;
         }
 
-        public UserRepository()
-        {
-	        
-        }
-
         //Les méthodes   
 
 		//Créer un cookie
 
-		public static void CreateCookie(string name, string value, int expirationDays)
+		//public void CreateCookie(string name, string value, int expirationDays)
+		//{
+		//	CookieContainer container = new CookieContainer();
+		//	Cookie cookie = new Cookie(name, value);
+		//	cookie.Expires = DateTime.Now.AddDays(expirationDays);
+		//	container.Add(cookie);
+
+		//	// Utilisez la logique appropriée pour envoyer le cookie à votre destination souhaitée.
+		//	// Par exemple, si vous effectuez une requête HTTP, vous pouvez l'ajouter à l'en-tête "Cookie".
+		//	// Voici un exemple d'utilisation avec HttpClient :
+
+		//	using (HttpClient client = new HttpClient())
+		//	{
+		//		client.BaseAddress = new Uri("https://localhost:7239/");
+		//		client.DefaultRequestHeaders.Add("Cookie", container.GetCookieHeader(client.BaseAddress));
+
+		//		// Effectuez vos opérations avec le client HttpClient ici
+		//	}
+		//}
+		public static void CreateCookie(string key, string value, TimeSpan expiration)
 		{
-			CookieContainer container = new CookieContainer();
-			Cookie cookie = new Cookie(name, value);
-			cookie.Expires = DateTime.Now.AddDays(expirationDays);
-			container.Add(cookie);
+			// Création d'une instance de Cookie avec la clé et la valeur spécifiées
+			Cookie cookie = new Cookie(key, value);
 
-			// Utilisez la logique appropriée pour envoyer le cookie à votre destination souhaitée.
-			// Par exemple, si vous effectuez une requête HTTP, vous pouvez l'ajouter à l'en-tête "Cookie".
-			// Voici un exemple d'utilisation avec HttpClient :
+			// Définition de la date d'expiration du cookie en ajoutant le délai spécifié à la date et l'heure actuelles
+			cookie.Expires = DateTime.UtcNow.Add(expiration);
 
-			using (HttpClient client = new HttpClient())
+			// Ajout du cookie à la collection de cookies du conteneur de la requête
+			var request = WebRequest.Create("https://localhost:7239") as HttpWebRequest;
+			request.CookieContainer = new CookieContainer();
+			request.CookieContainer.Add(cookie);
+		}
+
+		public static string GetCookieValue(string key)
+		{
+			// Récupération du cookie par sa clé dans la collection de cookies du conteneur de la requête
+			var request = WebRequest.Create("https://localhost:7239") as HttpWebRequest;
+			request.CookieContainer = new CookieContainer();
+			var response = request.GetResponse() as HttpWebResponse;
+			var cookies = response.Cookies;
+
+			foreach (Cookie cookie in cookies)
 			{
-				client.BaseAddress = new Uri("https://localhost:7239/");
-				client.DefaultRequestHeaders.Add("Cookie", container.GetCookieHeader(client.BaseAddress));
-
-				// Effectuez vos opérations avec le client HttpClient ici
+				if (cookie.Name == key)
+				{
+					return cookie.Value;
+				}
 			}
+
+			return null;
 		}
 
 		//Register

@@ -10,8 +10,18 @@
 	<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 	<p>Salut c'est Ninho</p>
 	@{
-		UserController.CreateCookie("Monbeaucookie","seffe544551",7);
-		Console.WriteLine("C'est bon il est créé ton cookie de mort la !");
+		UserController.CreateCookie("Monbeaucookie", "seffe544551", TimeSpan.FromDays(7));
+		string username = UserController.GetCookieValue("Monbeaucookie");
+		if (!string.IsNullOrEmpty(username))
+		{
+			Console.WriteLine($"Cookie créé avec succès. Valeur : {username}");
+		}
+		else
+		{
+			Console.WriteLine("Le cookie n'a pas été créé.");
+		}
+
+		Console.ReadLine();
 	}
 	;
 </div>
