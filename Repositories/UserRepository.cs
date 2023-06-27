@@ -85,7 +85,7 @@ namespace Portfolio.Repositories
 			}
 		}
 
-		public bool IsConnect(string token)
+		public bool IsConnected(string token)
 		{
 			var tokenHandler = new JwtSecurityTokenHandler();
 			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));

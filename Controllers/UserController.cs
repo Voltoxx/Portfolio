@@ -32,9 +32,10 @@ namespace Portfolio.Controllers
 			return _userRepository.IsAdmin(user);
 		}
 
-		public bool IsConnect(string token)
+		public bool IsConnected(string token)
 		{
-			return _userRepository.IsConnect(token);
+
+			return _userRepository.IsConnected(token);
 		}
 
 		public ActionResult Register(Users user)

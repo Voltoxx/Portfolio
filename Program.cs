@@ -1,4 +1,5 @@
 using System.Text;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Portfolio.Context;
@@ -13,20 +14,21 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<PortfolioRepository>();
+builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddRazorPages();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 	.AddJwtBearer(options =>
 	{
 		options.SaveToken = true;
-		options.TokenValidationParameters = new TokenValidationParameters()
+		options.TokenValidationParameters = new TokenValidationParameters
 		{
 			ValidateIssuer = true,
 			ValidateAudience = true,
 			ValidateLifetime = true,
 			ValidateIssuerSigningKey = true,
 			ValidIssuer = builder.Configuration["jwt:issuer"],
-			ValidAudience = builder.Configuration["jwt:issuer"],
+			ValidAudience = builder.Configuration["jwt:audience"],
 			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:key"]))
 		};
 	});
@@ -60,3 +62,18 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+class AuthenticationService
+{
+	private bool _isConnected = false;
+
+	public bool IsConnected()
+	{
+		return _isConnected;
+	}
+
+	public void SetConnected()
+	{
+		_isConnected = true;
+	}
+}

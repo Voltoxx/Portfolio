@@ -1,7 +1,9 @@
 ﻿@using Portfolio.Controllers
 
+@inject AuthenticationService Auth;
+
 <ul class="navbar-nav">
-	@if (IsConnect() == true)
+	@if (Auth.IsConnected())
 	{
 		<li class="nav-item">
 			<a  class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>

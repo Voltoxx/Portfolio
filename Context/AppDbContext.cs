@@ -29,6 +29,5 @@ namespace Portfolio.Context
 
         public DbSet<Projets> Projet { get; set; } = null!;
         public DbSet<Users> User { get; set; } = null!;
-
     }
 }
