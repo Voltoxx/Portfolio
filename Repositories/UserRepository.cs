@@ -18,11 +18,16 @@ namespace Portfolio.Repositories
 	        this._context = context;
         }
 
-		//Les méthodes   
+        public UserRepository()
+        {
+	        
+        }
+
+        //Les méthodes   
 
 		//Créer un cookie
 
-		public void CreateCookie(string name, string value, int expirationDays)
+		public static void CreateCookie(string name, string value, int expirationDays)
 		{
 			CookieContainer container = new CookieContainer();
 			Cookie cookie = new Cookie(name, value);

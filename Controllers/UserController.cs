@@ -27,7 +27,8 @@ namespace Portfolio.Controllers
 			return View();
 		}
 
-		public void CreateCookie(string cookieName, string cookieValue, int expirationDays)
+		[HttpGet("CreateCookie")]
+		public static void CreateCookie(string cookieName, string cookieValue, int expirationDays)
 		{
 			_userRepository.CreateCookie(cookieName, cookieValue, expirationDays);
 		}

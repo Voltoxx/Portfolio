@@ -46,12 +46,3 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
-
-string cookieName = "monCookie";
-string cookieValue = "valeurDuCookie";
-int expirationDays = 7;
-
-UserController userController = new UserController(); // Instanciation de UserController
-userController.CreateCookie(cookieName, cookieValue, expirationDays);
-
-Console.WriteLine("Cookie créé avec succès !");
