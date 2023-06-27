@@ -1,7 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using Portfolio.Context;
 using Portfolio.Models;
 using BCryptNet = BCrypt.Net.BCrypt;
@@ -13,41 +13,38 @@ namespace Portfolio.Repositories
 
         private readonly ApplicationDbContext _context;
 
-        private readonly IConfiguration _config;
-
-		public UserRepository(ApplicationDbContext context, IConfiguration config)
+        public UserRepository(ApplicationDbContext context)
         {
 	        this._context = context;
-	        _config = config;
         }
 
 		//Les méthodes   
 
-		//Verif si admin
+		//Créer un cookie
 
-		public string GenerateToken(Users user)
+		public void CreateCookie(string name, string value, int expirationDays)
 		{
-			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256Signature);
-			var claims = new List<Claim>
-			{
-				new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-				new Claim(ClaimTypes.Role, user.IsAdmin.ToString()), //Surement pas bon car IsAdmin est bool !!!!!!!!!!!!!!!
-				new Claim(ClaimTypes.Name, user.Username),
-			};
-			var tokenOptions = new JwtSecurityToken(
-				issuer: _config["Jwt:Issuer"],
-				audience: _config["Jwt:Audience"],
-				claims: claims,
-				expires: DateTime.Now.AddMinutes(15),
-				signingCredentials: credentials);
+			CookieContainer container = new CookieContainer();
+			Cookie cookie = new Cookie(name, value);
+			cookie.Expires = DateTime.Now.AddDays(expirationDays);
+			container.Add(cookie);
 
-			return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+			// Utilisez la logique appropriée pour envoyer le cookie à votre destination souhaitée.
+			// Par exemple, si vous effectuez une requête HTTP, vous pouvez l'ajouter à l'en-tête "Cookie".
+			// Voici un exemple d'utilisation avec HttpClient :
+
+			using (HttpClient client = new HttpClient())
+			{
+				client.BaseAddress = new Uri("https://localhost:7239/");
+				client.DefaultRequestHeaders.Add("Cookie", container.GetCookieHeader(client.BaseAddress));
+
+				// Effectuez vos opérations avec le client HttpClient ici
+			}
 		}
 
 		//Register
 
-        public void Registrer(Users user)
+		public void Registrer(Users user)
         {
 	        user.IsAdmin = false;
 
@@ -76,7 +73,6 @@ namespace Portfolio.Repositories
 			var existingUser = _context.User.FirstOrDefault(x => x.Username == user.Username);
 			if (existingUser != null && BCryptNet.Verify(user.Password, existingUser.Password))
 			{
-				string token = GenerateToken(existingUser);
 				// Utiliser le jeton pour la suite du traitement
 			}
 			else
@@ -85,32 +81,12 @@ namespace Portfolio.Repositories
 			}
 		}
 
-		public bool IsConnected(string token)
-		{
-			var tokenHandler = new JwtSecurityTokenHandler();
-			var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+		//public bool IsConnected(string token)
+		//{
 
-			try
-			{
-				tokenHandler.ValidateToken(token, new TokenValidationParameters
-				{
-					ValidateIssuerSigningKey = true,
-					IssuerSigningKey = securityKey,
-					ValidateIssuer = true,
-					ValidIssuer = _config["Jwt:Issuer"],
-					ValidateAudience = true,
-					ValidAudience = _config["Jwt:Audience"],
-					ClockSkew = TimeSpan.Zero
-				}, out SecurityToken validatedToken);
+		//}
 
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-		}
-
+		//Verif si admin
 		public bool IsAdmin(Users user)
 		{
 			var admin = _context.User.FirstOrDefault(x => x.Id == user.Id && x.IsAdmin == true);

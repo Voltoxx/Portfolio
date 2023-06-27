@@ -1,9 +1,11 @@
-﻿@using Portfolio.Controllers
+﻿
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 
 @inject AuthenticationService Auth;
 
 <ul class="navbar-nav">
-	@if (Auth.IsConnected())
+	@if (@*Auth.IsConnected()*@ true)
 	{
 		<li class="nav-item">
 			<a  class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>

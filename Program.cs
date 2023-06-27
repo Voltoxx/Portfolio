@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Portfolio.Context;
+using Portfolio.Controllers;
 using Portfolio.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,23 +17,6 @@ builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<PortfolioRepository>();
 builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddRazorPages();
-
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-	.AddJwtBearer(options =>
-	{
-		options.SaveToken = true;
-		options.TokenValidationParameters = new TokenValidationParameters
-		{
-			ValidateIssuer = true,
-			ValidateAudience = true,
-			ValidateLifetime = true,
-			ValidateIssuerSigningKey = true,
-			ValidIssuer = builder.Configuration["jwt:issuer"],
-			ValidAudience = builder.Configuration["jwt:audience"],
-			IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["jwt:key"]))
-		};
-	});
-
 
 var app = builder.Build();
 
@@ -63,17 +47,11 @@ app.MapRazorPages();
 
 app.Run();
 
-class AuthenticationService
-{
-	private bool _isConnected = false;
+string cookieName = "monCookie";
+string cookieValue = "valeurDuCookie";
+int expirationDays = 7;
 
-	public bool IsConnected()
-	{
-		return _isConnected;
-	}
+UserController userController = new UserController(); // Instanciation de UserController
+userController.CreateCookie(cookieName, cookieValue, expirationDays);
 
-	public void SetConnected()
-	{
-		_isConnected = true;
-	}
-}
+Console.WriteLine("Cookie créé avec succès !");
