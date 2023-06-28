@@ -2,7 +2,7 @@
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 
-@inject AuthenticationService Auth;
+@inject Portfolio.Services.AuthenticationService Auth;
 
 <ul class="navbar-nav">
 	@if (@*Auth.IsConnected()*@ true)

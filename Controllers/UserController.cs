@@ -25,23 +25,12 @@ namespace Portfolio.Controllers
 		{
 			return View();
 		}
-		public IActionResult Test()
-		{
-			// Appel de la méthode CreateCookie du service d'authentification
-			string key = "username";
-			string value = "JohnDoe";
-			int expiration = 7; // Durée de validité en jours
 
-			_authenticationService.CreateCookie(key, value, expiration);
-
-			// Autres actions...
-
-			return View();
-		}
-
-		public void CreateCookie(string key, string value, int expiration)
+		[HttpGet("CreateCookie")]
+		public IActionResult CreateCookie(string key, string value, int expiration)
 		{
 			_authenticationService.CreateCookie(key, value, expiration);
+			return Ok();
 		}
 
 		public bool IsAdmin(Users user)
