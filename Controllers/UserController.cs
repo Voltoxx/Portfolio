@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 using Portfolio.Repositories;
 using Portfolio.Services;
@@ -10,6 +11,7 @@ namespace Portfolio.Controllers
 
 		private readonly UserRepository _userRepository;
 		private readonly AuthenticationService _authenticationService;
+
 		public UserController(UserRepository userRepository, AuthenticationService Auth)
 		{
 			_userRepository = userRepository;
@@ -26,10 +28,15 @@ namespace Portfolio.Controllers
 			return View();
 		}
 
-		[HttpGet("CreateCookie")]
+		public IActionResult ViewLogout()
+		{
+			return View();
+		}
+
 		public IActionResult CreateCookie(string key, string value, int expiration)
 		{
-			_authenticationService.CreateCookie(key, value, expiration);
+			var cookieResponse = HttpContext.Response;
+			_authenticationService.CreateCookie(key, value, expiration, cookieResponse);
 			return Ok();
 		}
 
@@ -54,5 +61,17 @@ namespace Portfolio.Controllers
 			_userRepository.Login(user);
 			return RedirectToAction(nameof(ViewLogin));
 		}
+
+		//public ActionResult Logout()
+		//{
+		//	_userRepository.Logout(user);
+		//	return RedirectToAction(nameof(ViewLogout));
+		//}
+
+		private string key = "CookieKey";
+		private string value = "CookieValue";
+		private int expiration = 7;
 	}
+
+	
 }

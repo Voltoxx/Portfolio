@@ -1,23 +1,22 @@
 ﻿using Azure;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Portfolio.Services
 {
 	public class AuthenticationService
 	{
-		public void CreateCookie(string name, string value, int expirationDays)
+		
+		public void CreateCookie(string name, string value, int expirationDays, HttpResponse cookieResponse)
 		{
-			CookieContainer cookieContainer = new CookieContainer();
+			var cookieOptions = new CookieOptions
+			{
+				Path = "/",
+				Expires = DateTimeOffset.UtcNow.AddDays(expirationDays),
+				Secure = true,
+				IsEssential = true
+			};
 
-			// Créer un cookie
-			Cookie cookie = new Cookie("mon_cookie", "valeur_du_cookie");
-			cookie.Domain = "localhost";
-			cookie.Path = "/";
-
-			// Ajouter le cookie au CookieContainer
-			cookieContainer.Add(cookie);
-
-			Console.WriteLine("Cookie créé et ajouté au CookieContainer avec succès.");
+			cookieResponse.Cookies.Append(name, value, cookieOptions);
 		}
 	}
 
