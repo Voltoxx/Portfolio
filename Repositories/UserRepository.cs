@@ -1,7 +1,6 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Net;
+using System;
+using System.Web;
 using Portfolio.Context;
 using Portfolio.Models;
 using BCryptNet = BCrypt.Net.BCrypt;
@@ -18,7 +17,7 @@ namespace Portfolio.Repositories
 	        this._context = context;
         }
 
-        //Les méthodes   
+		//Les méthodes   
 
 		//Créer un cookie
 
@@ -41,37 +40,13 @@ namespace Portfolio.Repositories
 		//		// Effectuez vos opérations avec le client HttpClient ici
 		//	}
 		//}
-		public static void CreateCookie(string key, string value, TimeSpan expiration)
+		public static void CreateCookie(string name, string value, int expirationDays)
 		{
-			// Création d'une instance de Cookie avec la clé et la valeur spécifiées
-			Cookie cookie = new Cookie(key, value);
-
-			// Définition de la date d'expiration du cookie en ajoutant le délai spécifié à la date et l'heure actuelles
-			cookie.Expires = DateTime.UtcNow.Add(expiration);
-
-			// Ajout du cookie à la collection de cookies du conteneur de la requête
-			var request = WebRequest.Create("https://localhost:7239") as HttpWebRequest;
-			request.CookieContainer = new CookieContainer();
-			request.CookieContainer.Add(cookie);
-		}
-
-		public static string GetCookieValue(string key)
-		{
-			// Récupération du cookie par sa clé dans la collection de cookies du conteneur de la requête
-			var request = WebRequest.Create("https://localhost:7239") as HttpWebRequest;
-			request.CookieContainer = new CookieContainer();
-			var response = request.GetResponse() as HttpWebResponse;
-			var cookies = response.Cookies;
-
-			foreach (Cookie cookie in cookies)
+			CookieContainer container = new CookieContainer();
+			container.Add(new Cookie(name, value)
 			{
-				if (cookie.Name == key)
-				{
-					return cookie.Value;
-				}
-			}
-
-			return null;
+				Expires = DateTime.Now.AddDays(expirationDays)
+			});
 		}
 
 		//Register

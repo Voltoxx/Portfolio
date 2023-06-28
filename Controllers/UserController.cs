@@ -27,10 +27,14 @@ namespace Portfolio.Controllers
 			return View();
 		}
 
-		[HttpGet("CreateCookie")]
-		public static void CreateCookie(string cookieName, string cookieValue, int expirationDays)
+		public static void CreateCookie(string key, string value, TimeSpan expiration)
 		{
-			_userRepository.CreateCookie(cookieName, cookieValue, expirationDays);
+			_userRepository.CreateCookie(key, value, expiration);
+		}
+
+		public static string GetCookieValue(string key)
+		{
+			return _userRepository.GetCookieValue(key);
 		}
 
 		public bool IsAdmin(Users user)
