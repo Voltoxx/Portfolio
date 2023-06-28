@@ -9,11 +9,11 @@ namespace Portfolio.Controllers
 	{
 
 		private readonly UserRepository _userRepository;
-		private readonly AuthenticationServices _authenticationServices;
-		public UserController(UserRepository userRepository, AuthenticationServices Auth)
+		private readonly AuthenticationService _authenticationService;
+		public UserController(UserRepository userRepository, AuthenticationService Auth)
 		{
 			_userRepository = userRepository;
-			_authenticationServices = Auth;
+			_authenticationService = Auth;
 		}
 
 		public IActionResult ViewRegister()
@@ -32,7 +32,7 @@ namespace Portfolio.Controllers
 			string value = "JohnDoe";
 			int expiration = 7; // Durée de validité en jours
 
-			_authenticationServices.CreateCookie(key, value, expiration);
+			_authenticationService.CreateCookie(key, value, expiration);
 
 			// Autres actions...
 
@@ -41,7 +41,7 @@ namespace Portfolio.Controllers
 
 		public void CreateCookie(string key, string value, int expiration)
 		{
-			_authenticationServices.CreateCookie(key, value, expiration);
+			_authenticationService.CreateCookie(key, value, expiration);
 		}
 
 		public bool IsAdmin(Users user)

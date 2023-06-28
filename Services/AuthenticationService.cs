@@ -2,7 +2,7 @@
 
 namespace Portfolio.Services
 {
-	public class AuthenticationServices
+	public class AuthenticationService
 	{
 
 		public void CreateCookie(string name, string value, int expirationDays)
@@ -13,6 +13,8 @@ namespace Portfolio.Services
 				Expires = DateTime.Now.AddDays(expirationDays)
 			});
 		}
+
+
 
 	}
 }

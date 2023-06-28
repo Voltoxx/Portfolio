@@ -2,7 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Portfolio.Context;
 using Portfolio.Repositories;
-using Portfolio.Services;
+using AuthenticationService = Portfolio.Services.AuthenticationService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +15,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<PortfolioRepository>();
 builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<AuthenticationServices>();
+builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
