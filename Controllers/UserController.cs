@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Portfolio.Models;
 using Portfolio.Repositories;
+using Portfolio.Services;
 
 namespace Portfolio.Controllers
 {
 	public class UserController : Controller
 	{
-		public UserController()
-		{
-
-		}
 
 		private readonly UserRepository _userRepository;
-		public UserController(UserRepository userRepository)
+		private readonly AuthenticationServices _authenticationServices;
+		public UserController(UserRepository userRepository, AuthenticationServices Auth)
 		{
 			_userRepository = userRepository;
+			_authenticationServices = Auth;
 		}
 
 		public IActionResult ViewRegister()
@@ -26,15 +25,23 @@ namespace Portfolio.Controllers
 		{
 			return View();
 		}
-
-		public static void CreateCookie(string key, string value, TimeSpan expiration)
+		public IActionResult Test()
 		{
-			_userRepository.CreateCookie(key, value, expiration);
+			// Appel de la méthode CreateCookie du service d'authentification
+			string key = "username";
+			string value = "JohnDoe";
+			int expiration = 7; // Durée de validité en jours
+
+			_authenticationServices.CreateCookie(key, value, expiration);
+
+			// Autres actions...
+
+			return View();
 		}
 
-		public static string GetCookieValue(string key)
+		public void CreateCookie(string key, string value, int expiration)
 		{
-			return _userRepository.GetCookieValue(key);
+			_authenticationServices.CreateCookie(key, value, expiration);
 		}
 
 		public bool IsAdmin(Users user)

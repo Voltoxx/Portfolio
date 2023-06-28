@@ -1,10 +1,9 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Portfolio.Context;
-using Portfolio.Controllers;
 using Portfolio.Repositories;
+using Portfolio.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +14,8 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 builder.Services.AddScoped<PortfolioRepository>();
-builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<AuthenticationServices>();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
