@@ -33,10 +33,10 @@ namespace Portfolio.Controllers
 			return View();
 		}
 
-		public IActionResult CreateCookie(string key, string value, int expiration)
+		public IActionResult CreateCookie()
 		{
 			var cookieResponse = HttpContext.Response;
-			_authenticationService.CreateCookie(key, value, expiration, cookieResponse);
+			_authenticationService.CreateCookie("Session", Guid.NewGuid().ToString(), 7, cookieResponse);
 			return Ok();
 		}
 
@@ -67,10 +67,6 @@ namespace Portfolio.Controllers
 		//	_userRepository.Logout(user);
 		//	return RedirectToAction(nameof(ViewLogout));
 		//}
-
-		private string key = "CookieKey";
-		private string value = "CookieValue";
-		private int expiration = 7;
 	}
 
 	

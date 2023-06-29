@@ -19,28 +19,6 @@ namespace Portfolio.Repositories
 
 		//Les méthodes   
 
-		//Créer un cookie
-
-		//public void CreateCookie(string name, string value, int expirationDays)
-		//{
-		//	CookieContainer container = new CookieContainer();
-		//	Cookie cookie = new Cookie(name, value);
-		//	cookie.Expires = DateTime.Now.AddDays(expirationDays);
-		//	container.Add(cookie);
-
-		//	// Utilisez la logique appropriée pour envoyer le cookie à votre destination souhaitée.
-		//	// Par exemple, si vous effectuez une requête HTTP, vous pouvez l'ajouter à l'en-tête "Cookie".
-		//	// Voici un exemple d'utilisation avec HttpClient :
-
-		//	using (HttpClient client = new HttpClient())
-		//	{
-		//		client.BaseAddress = new Uri("https://localhost:7239/");
-		//		client.DefaultRequestHeaders.Add("Cookie", container.GetCookieHeader(client.BaseAddress));
-
-		//		// Effectuez vos opérations avec le client HttpClient ici
-		//	}
-		//}
-
 		//Register
 
 		public void Registrer(Users user)
@@ -72,7 +50,13 @@ namespace Portfolio.Repositories
 			var existingUser = _context.User.FirstOrDefault(x => x.Username == user.Username);
 			if (existingUser != null && BCryptNet.Verify(user.Password, existingUser.Password))
 			{
-				// Utiliser le jeton pour la suite du traitement
+				//Création du cookie avec le controller
+				var httpContextAccessor = new HttpContextAccessor();
+				var httpContext = httpContextAccessor.HttpContext;
+				string cookieValue = httpContext.Request.Cookies["Session"];
+				user.CookieValue = cookieValue;
+				_context.SaveChanges();
+				//insère la valeur du cookie dans le champ CookieValue
 			}
 			else
 			{

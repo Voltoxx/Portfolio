@@ -13,6 +13,8 @@ namespace Portfolio.Models
 
 		public string Password { get; set; } = string.Empty;
 
+		public string CookieValue { get; set; } = string.Empty;
+
 		public bool IsAdmin { get; set; }
 
 	}
