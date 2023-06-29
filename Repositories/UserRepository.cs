@@ -12,14 +12,13 @@ namespace Portfolio.Repositories
     {
 
 	    private readonly AppDbContext _context;
-	    private readonly AuthenticationService _authenticationService;
+	    private readonly AuthenticationService _authenticationService = null!;
 
-		public UserRepository(AppDbContext context, AuthenticationService authenticationService)
-        {
-	        this._context = context;
-	        this._authenticationService = authenticationService;
+		public UserRepository(AppDbContext context)
+		{
+			this._context = context;
 
-        }
+		}
 
 		//Les méthodes   
 
