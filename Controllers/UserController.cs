@@ -1,5 +1,7 @@
 ﻿using Azure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Portfolio.Context;
 using Portfolio.Models;
 using Portfolio.Repositories;
 using Portfolio.Services;
@@ -33,11 +35,10 @@ namespace Portfolio.Controllers
 			return View();
 		}
 
-		public IActionResult CreateCookie()
+		public Users GetUserConnected()
 		{
-			var cookieResponse = HttpContext.Response;
-			_authenticationService.CreateCookie("Session", Guid.NewGuid().ToString(), 7, cookieResponse);
-			return Ok();
+			var user = _authenticationService.GetUserConnected(HttpContext);
+			return user;
 		}
 
 		public bool IsAdmin(Users user)
@@ -58,7 +59,7 @@ namespace Portfolio.Controllers
 
 		public ActionResult Login(Users user)
 		{
-			_userRepository.Login(user);
+			_userRepository.Login(user, HttpContext.Response);
 			return RedirectToAction(nameof(ViewLogin));
 		}
 

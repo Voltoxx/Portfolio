@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>();
+builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<PortfolioRepository>();
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<AuthenticationService>();

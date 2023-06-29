@@ -9,9 +9,9 @@ namespace Portfolio.Repositories
     public class PortfolioRepository
     {
 
-        private readonly ApplicationDbContext _context;
+        private readonly AppDbContext _context;
 
-        public PortfolioRepository(ApplicationDbContext context)
+        public PortfolioRepository(AppDbContext context)
         {
             this._context = context;
         }
@@ -22,28 +22,28 @@ namespace Portfolio.Repositories
 
         public IEnumerable<Projets> GetAllProjects()
         {
-            return _context.Projet;
+            return _context.Projets;
         }
 
         //Récupérer les Projet selon la catégorie
 
         public IEnumerable<Projets> GetOneCategory(string categorie)
         {
-            return _context.Projet.Where(x => x.Categorie.CategorieName == categorie);
+            return _context.Projets.Where(x => x.Categorie.CategorieName == categorie);
         }
 
         //Récupérer un Projet selon son nom
 
         public Projets GetOneProject(int id)
         {
-            return _context.Projet.First(x => x.Id == id);
+            return _context.Projets.First(x => x.Id == id);
         }
 
         //Ajouter un Projet 
 
         public void InsertOneProject(Projets projet)
         {
-            _context.Projet.Add(projet);
+            _context.Projets.Add(projet);
             _context.SaveChanges();
         }
 
@@ -51,13 +51,13 @@ namespace Portfolio.Repositories
 
         public void UpdateOneProject(Projets projet)
         {
-	        var change = _context.Projet.First(x => x.Id == projet.Id);
+	        var change = _context.Projets.First(x => x.Id == projet.Id);
 	        change.Title = projet.Title;
             change.Description = projet.Description;
             change.ImagePrincipale = projet.ImagePrincipale;
             change.Categorie = projet.Categorie;
             change.Images = projet.Images;
-            _context.Projet.Update(change);
+            _context.Projets.Update(change);
 	        _context.SaveChanges();
         }
 
@@ -65,7 +65,7 @@ namespace Portfolio.Repositories
 
         public void DeleteOneProject(int id)
         {
-            _context.Projet.Remove(_context.Projet.First(x => x.Id == id));
+            _context.Projets.Remove(_context.Projets.First(x => x.Id == id));
             _context.SaveChanges();
         }
 

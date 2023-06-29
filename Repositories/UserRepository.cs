@@ -3,6 +3,7 @@ using System;
 using System.Web;
 using Portfolio.Context;
 using Portfolio.Models;
+using Portfolio.Services;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Portfolio.Repositories
@@ -10,11 +11,14 @@ namespace Portfolio.Repositories
     public class UserRepository
     {
 
-	    private readonly ApplicationDbContext _context;
+	    private readonly AppDbContext _context;
+	    private readonly AuthenticationService _authenticationService;
 
-        public UserRepository(ApplicationDbContext context)
+		public UserRepository(AppDbContext context, AuthenticationService authenticationService)
         {
 	        this._context = context;
+	        this._authenticationService = authenticationService;
+
         }
 
 		//Les méthodes   
@@ -25,7 +29,7 @@ namespace Portfolio.Repositories
         {
 	        user.IsAdmin = false;
 
-			var exist = _context.User.Any(x => x.Username == user.Username);
+			var exist = _context.Users.Any(x => x.Username == user.Username);
 			if (exist)
 	        {
 		        return;
@@ -37,7 +41,7 @@ namespace Portfolio.Repositories
 
 				// Utiliser le mot de passe haché
 				user.Password = hashedPassword;
-				_context.User.Add(user);
+				_context.Users.Add(user);
 				_context.SaveChanges();
 			}
 	       
@@ -45,18 +49,16 @@ namespace Portfolio.Repositories
 
 		//Login
 
-		public void Login(Users user)
+		public void Login(Users user, HttpResponse cookieResponse)
 		{
-			var existingUser = _context.User.FirstOrDefault(x => x.Username == user.Username);
+			var existingUser = _context.Users.FirstOrDefault(x => x.Username == user.Username);
 			if (existingUser != null && BCryptNet.Verify(user.Password, existingUser.Password))
 			{
-				//Création du cookie avec le controller
-				var httpContextAccessor = new HttpContextAccessor();
-				var httpContext = httpContextAccessor.HttpContext;
-				string cookieValue = httpContext.Request.Cookies["Session"];
-				user.CookieValue = cookieValue;
+				//Créer le cookie et l'insere dans la base de données
+				string token = Guid.NewGuid().ToString();
+				_authenticationService.CreateCookie("Session", token, 7, cookieResponse);
+				user.CookieValue = token;
 				_context.SaveChanges();
-				//insère la valeur du cookie dans le champ CookieValue
 			}
 			else
 			{
@@ -64,15 +66,10 @@ namespace Portfolio.Repositories
 			}
 		}
 
-		//public bool IsConnected(string token)
-		//{
-
-		//}
-
 		//Verif si admin
 		public bool IsAdmin(Users user)
 		{
-			var admin = _context.User.FirstOrDefault(x => x.Id == user.Id && x.IsAdmin == true);
+			var admin = _context.Users.FirstOrDefault(x => x.Id == user.Id && x.IsAdmin == true);
 			if (admin != null)
 			{
 				return true;
@@ -81,6 +78,11 @@ namespace Portfolio.Repositories
 			{
 				return false;
 			}
+		}
+
+		public Users GetUserConnected(string token)
+		{
+			return _context.Users.FirstOrDefault(u => u.CookieValue == token);
 		}
 	}
 }

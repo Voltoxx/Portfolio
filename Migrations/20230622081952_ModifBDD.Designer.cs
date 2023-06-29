@@ -11,7 +11,7 @@ using Portfolio.Context;
 
 namespace Portfolio.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
+    [DbContext(typeof(AppDbContext))]
     [Migration("20230622081952_ModifBDD")]
     partial class ModifBDD
     {

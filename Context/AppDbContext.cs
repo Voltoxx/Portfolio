@@ -6,11 +6,16 @@ using Portfolio.Models;
 
 namespace Portfolio.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
+        }
+
+        public AppDbContext()
+        {
+	        
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -27,7 +32,7 @@ namespace Portfolio.Context
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Projets> Projet { get; set; } = null!;
-        public DbSet<Users> User { get; set; } = null!;
+        public DbSet<Projets> Projets { get; set; } = null!;
+        public DbSet<Users> Users { get; set; } = null!;
     }
 }
