@@ -36,7 +36,7 @@ namespace Portfolio.Controllers
 
 		public Users GetUserConnected()
 		{
-			var user = _authenticationService.GetUserConnected(HttpContext);
+			var user = _authenticationService.GetUserConnected();
 			return user;
 		}
 
