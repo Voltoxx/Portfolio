@@ -1,10 +1,9 @@
-﻿using Azure;
+﻿using System.Runtime.InteropServices.JavaScript;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Portfolio.Context;
 using Portfolio.Models;
 using Portfolio.Repositories;
 using Portfolio.Services;
+using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Portfolio.Controllers
 {
@@ -59,7 +58,18 @@ namespace Portfolio.Controllers
 
 		public ActionResult Login(Users user)
 		{
-			_userRepository.Login(user, HttpContext.Response);
+			var existingUser = _userRepository.GetUserByName(user);
+			if (existingUser != null && BCryptNet.Verify(user.Password, existingUser.Password))
+			{
+				//Créer le cookie et l'insere dans le requete Http
+				string token = Guid.NewGuid().ToString();
+				_authenticationService.CreateCookie("Session", token, 7, Response);
+				_userRepository.Login(existingUser, token);
+			}
+			else
+			{
+				return new EmptyResult();
+			}
 			return RedirectToAction(nameof(ViewLogin));
 		}
 

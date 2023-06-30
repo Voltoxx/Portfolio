@@ -1,9 +1,5 @@
-﻿using System.Net;
-using System;
-using System.Web;
-using Portfolio.Context;
+﻿using Portfolio.Context;
 using Portfolio.Models;
-using Portfolio.Services;
 using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Portfolio.Repositories
@@ -12,9 +8,8 @@ namespace Portfolio.Repositories
     {
 
 	    private readonly AppDbContext _context;
-	    private readonly AuthenticationService _authenticationService = null!;
 
-		public UserRepository(AppDbContext context)
+	    public UserRepository(AppDbContext context)
 		{
 			this._context = context;
 
@@ -48,22 +43,17 @@ namespace Portfolio.Repositories
 
 		//Login
 
-		public void Login(Users user, HttpResponse cookieResponse)
+		public void Login(Users user, string token)
 		{
-			var existingUser = _context.Users.FirstOrDefault(x => x.Username == user.Username);
-			if (existingUser != null && BCryptNet.Verify(user.Password, existingUser.Password))
-			{
-				//Créer le cookie et l'insere dans la base de données
-				string token = Guid.NewGuid().ToString();
-				_authenticationService.CreateCookie("Session", token, 7, cookieResponse);
-				user.CookieValue = token;
-				_context.SaveChanges();
-			}
-			else
-			{
-				return;
-			}
+			user.CookieValue = token;
+			_context.SaveChanges();
 		}
+
+		public Users GetUserByName(Users user)
+		{
+			return _context.Users.First(x => x.Username == user.Username);
+		}
+
 
 		//Verif si admin
 		public bool IsAdmin(Users user)
@@ -81,7 +71,7 @@ namespace Portfolio.Repositories
 
 		public Users GetUserConnected(string token)
 		{
-			return _context.Users.FirstOrDefault(u => u.CookieValue == token);
+			return _context.Users.First(u => u.CookieValue == token);
 		}
 	}
 }

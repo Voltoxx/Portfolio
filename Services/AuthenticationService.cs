@@ -1,8 +1,4 @@
-﻿using Azure;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Portfolio.Context;
-using Portfolio.Models;
+﻿using Portfolio.Models;
 using Portfolio.Repositories;
 
 namespace Portfolio.Services

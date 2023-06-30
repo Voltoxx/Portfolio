@@ -1,9 +1,11 @@
 ﻿
 @using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Portfolio.Controllers
+@inject UserController UserController
 
 
 <ul class="navbar-nav">
-	@if (false)
+	@if (UserController.GetUserConnected() != null )
 	{
 		<li class="nav-item">
 			<a  class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
