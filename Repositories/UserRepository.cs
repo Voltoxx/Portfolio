@@ -46,6 +46,7 @@ namespace Portfolio.Repositories
 		public void Login(Users user, string token)
 		{
 			user.CookieValue = token;
+            _context.Users.Update(user);
 			_context.SaveChanges();
 		}
 
