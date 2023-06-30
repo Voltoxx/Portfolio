@@ -2,10 +2,11 @@
 using Portfolio.Models;
 using System.Diagnostics;
 using Portfolio.Repositories;
+using Portfolio.Services;
 
 namespace Portfolio.Controllers
 {
-    public class PortfolioController : Controller
+    public class PortfolioController : CustomControllerBase
     {
         //private readonly ILogger<PortfolioController> _logger;
 
@@ -79,7 +80,7 @@ namespace Portfolio.Controllers
 
         private readonly PortfolioRepository _portfolioRepository;
 
-        public PortfolioController(PortfolioRepository portfolioRepository)
+        public PortfolioController(PortfolioRepository portfolioRepository, AuthenticationService auth) : base(auth)
         {
             _portfolioRepository = portfolioRepository;
         }

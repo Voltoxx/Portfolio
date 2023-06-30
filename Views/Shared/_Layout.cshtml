@@ -1,6 +1,6 @@
 ﻿@using Portfolio.Repositories
 @using Portfolio.Services
-@inject UserRepository UserRepository
+
 @inject AuthenticationService Auth
 
 <!DOCTYPE html>
@@ -36,7 +36,7 @@
 	                    <li class="nav-item">
 		                    <a class="nav-link text-dark" asp-area="" asp-controller="Portfolio" asp-action="Contact">Contact</a>
 	                    </li>
-                        @if (UserRepository.IsAdmin(Auth.GetUserConnected()))
+                        @if (Auth.GetUser() != null)
                         {
 	                        <li class="nav-item">
 		                        <a class="nav-link text-dark" asp-area="" asp-controller="Portfolio" asp-action="Manage">Edit Project</a>

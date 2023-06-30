@@ -7,17 +7,17 @@ using BCryptNet = BCrypt.Net.BCrypt;
 
 namespace Portfolio.Controllers
 {
-	public class UserController : Controller
+	public class UserController : CustomControllerBase
 	{
 
 		private readonly UserRepository _userRepository;
 		private readonly AuthenticationService _authenticationService;
 
-		public UserController(UserRepository userRepository, AuthenticationService Auth)
-		{
+		public UserController(UserRepository userRepository, AuthenticationService Auth) : base(Auth)
+        {
 			_userRepository = userRepository;
 			_authenticationService = Auth;
-		}
+        }
 
 		public IActionResult ViewRegister()
 		{
@@ -32,12 +32,6 @@ namespace Portfolio.Controllers
 		public IActionResult ViewLogout()
 		{
 			return View();
-		}
-
-		public Users GetUserConnected()
-		{
-			var user = _authenticationService.GetUserConnected();
-			return user;
 		}
 
 		public bool IsAdmin(Users user)

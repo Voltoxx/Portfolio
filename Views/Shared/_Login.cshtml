@@ -3,7 +3,7 @@
 @inject AuthenticationService Auth
 
 <ul class="navbar-nav">
-	@if (Auth.GetUserConnected() != null)
+	@if (Auth.GetUser() != null)
 	{
 		<li class="nav-item">
 			<a  class="nav-link text-dark" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>

@@ -5,11 +5,14 @@ namespace Portfolio.Services
 {
 	public class AuthenticationService
 	{
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly UserRepository _userRepository;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        private Users? User = null;
+
 		public AuthenticationService(UserRepository userRepository, IHttpContextAccessor httpContextAccessor)
-		{
-			_userRepository = userRepository;
+        {
+            _userRepository = userRepository;
             _httpContextAccessor = httpContextAccessor;
         }
 
@@ -26,17 +29,21 @@ namespace Portfolio.Services
 			cookieResponse.Cookies.Append(name, value, cookieOptions);
 		}
 
-        public Users GetUserConnected()
-		{
-            var context = _httpContextAccessor.HttpContext;
-            var request = context.Request;
-            var token = request.Cookies["Session"];
-            // Comparaison du cookie avec ceux de la base de données
-            var userConnected = _userRepository.GetUserConnected(token);
+        public Users? GetUser()
+        {
+            try
+            {
+                var request = _httpContextAccessor.HttpContext.Request;
+                var token = request.Cookies["Session"];
+                // Comparaison du cookie avec ceux de la base de données
+                User = _userRepository.GetUserConnected(token);
+            }
+            catch (Exception)
+            {
+            }
 
-			return userConnected;
-		}
-
+            return User;
+        }
     }
 
 }
