@@ -50,6 +50,15 @@ namespace Portfolio.Repositories
 			_context.SaveChanges();
 		}
 
+		public void Logout(Users user)
+		{
+			user.CookieValue = "";
+			_context.Users.Update(user);
+			_context.SaveChanges();
+		}
+
+		//Logout
+
 		public Users GetUserByName(Users user)
 		{
 			return _context.Users.First(x => x.Username == user.Username);

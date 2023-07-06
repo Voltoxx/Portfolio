@@ -39,15 +39,10 @@ namespace Portfolio.Controllers
 			return _userRepository.IsAdmin(user);
 		}
 
-		//public bool IsConnected(string token)
-		//{
-
-		//}
-
 		public ActionResult Register(Users user)
 		{
 			_userRepository.Registrer(user);
-			return RedirectToAction(nameof(ViewRegister));
+			return RedirectToAction("Index", "Portfolio");
 		}
 
 		public ActionResult Login(Users user)
@@ -64,14 +59,17 @@ namespace Portfolio.Controllers
 			{
 				return new EmptyResult();
 			}
-			return RedirectToAction(nameof(ViewLogin));
+			return RedirectToAction("Index", "Portfolio");
 		}
 
-		//public ActionResult Logout()
-		//{
-		//	_userRepository.Logout(user);
-		//	return RedirectToAction(nameof(ViewLogout));
-		//}
+		public ActionResult Logout()
+		{
+			string token = _authenticationService.GetUser().CookieValue;
+			Users user = _userRepository.GetUserConnected(token);
+			_userRepository.Logout(user);
+			_authenticationService.DeleteCookie();
+			return RedirectToAction("Index", "Portfolio");
+		}
 	}
 
 	

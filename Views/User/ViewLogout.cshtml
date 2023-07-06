@@ -1,0 +1,22 @@
+﻿@model Portfolio.Models.Users
+@using Portfolio.Services
+@inject AuthenticationService Auth
+
+@{
+    ViewData["Title"] = "ViewLogout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>ViewLogout</h1>
+
+<h3>Êtes-vous sur de vous déconnecter @Auth.GetUser().Username ?</h3>
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="Logout">
+			<div class="form-group">
+				<input type="submit" value="Se déconnecter" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>

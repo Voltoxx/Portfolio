@@ -1,3 +1,4 @@
+using Azure;
 using Portfolio.Models;
 using Portfolio.Repositories;
 
@@ -44,6 +45,13 @@ namespace Portfolio.Services
 
             return User;
         }
+
+        public void DeleteCookie()
+        {
+            var request = _httpContextAccessor.HttpContext.Response;
+            request.Cookies.Delete("Session");
+        }
+
     }
 
 }
