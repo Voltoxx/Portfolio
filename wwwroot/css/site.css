@@ -8,6 +8,10 @@ html {
   }
 }
 
+nav {
+    font-family: Shippori Mincho;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -15,4 +19,26 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+main {
+    height: 100vh;
+}
+
+footer{
+    padding-top : 25px;
+}
+
+/*Page profil*/
+
+div .presentation {
+    float : left;
+    text-align : center;
+    width: 1440px;
+    background-color: #AEAEAE;
+}
+
+.pdp{
+    width : 20%;
+    height : 10%;
 }

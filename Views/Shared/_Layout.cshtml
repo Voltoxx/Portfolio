@@ -1,4 +1,4 @@
-﻿@using Portfolio.Repositories
+@using Portfolio.Repositories
 @using Portfolio.Services
 
 @inject AuthenticationService Auth
@@ -11,7 +11,6 @@
     <title>@ViewData["Title"] - Portfolio</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Portfolio.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -56,7 +55,7 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top text-muted">
 	    <div class="container text-center" >
             <a asp-area="" asp-controller="Portfolio" asp-action="LegalMentions">Mentions légales</a> - <a asp-area="" asp-controller="Portfolio" asp-action="PrivacyPolicies">Politique de confidentialité</a> - <a asp-area="" asp-controller="Portfolio" asp-action="CookieManagement">Gestion des cookies</a> - <a asp-area="" asp-controller="Portfolio" asp-action="SiteMap">Plan du site</a>
             <p>Tout droit réservés 2023  &copy; Made by Arthur Philippe</p>

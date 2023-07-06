@@ -29,7 +29,7 @@ namespace Portfolio.Repositories
 
         public IEnumerable<Projets> GetOneCategory(string categorie)
         {
-            return _context.Projets.Where(x => x.Categorie.CategorieName == categorie);
+            return _context.Projets.Where(x => x.Categorie == categorie);
         }
 
         //Récupérer un Projet selon son nom
@@ -56,8 +56,10 @@ namespace Portfolio.Repositories
             change.Description = projet.Description;
             change.ImagePrincipale = projet.ImagePrincipale;
             change.Categorie = projet.Categorie;
-            change.Images = projet.Images;
-            _context.Projets.Update(change);
+            change.FirstImage = projet.FirstImage;
+            change.SecondImage = projet.SecondImage;
+            change.ThirdImage = projet.ThirdImage;
+			_context.Projets.Update(change);
 	        _context.SaveChanges();
         }
 

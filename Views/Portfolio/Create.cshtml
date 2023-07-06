@@ -29,6 +29,26 @@
 				<span asp-validation-for="ImagePrincipale" class="text-danger"></span>
 			</div>
 			<div class="form-group">
+				<label asp-for="Categorie" class="control-label"></label>
+				<input asp-for="Categorie" class="form-control" />
+				<span asp-validation-for="Categorie" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="FirstImage" class="control-label"></label>
+				<input asp-for="FirstImage" class="form-control" />
+				<span asp-validation-for="FirstImage" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SecondImage" class="control-label"></label>
+				<input asp-for="SecondImage" class="form-control" />
+				<span asp-validation-for="SecondImage" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ThirdImage" class="control-label"></label>
+				<input asp-for="ThirdImage" class="form-control" />
+				<span asp-validation-for="ThirdImage" class="text-danger"></span>
+			</div>
+			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-primary" />
 			</div>
 		</form>
@@ -36,6 +56,6 @@
 </div>
 
 <div>
-	<a asp-action="Projects">Back to List</a>
+	<a asp-action="Manage">Back to List</a>
 </div>
 

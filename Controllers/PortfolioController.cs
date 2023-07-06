@@ -8,14 +8,8 @@ namespace Portfolio.Controllers
 {
     public class PortfolioController : CustomControllerBase
     {
-        //private readonly ILogger<PortfolioController> _logger;
 
-        //public PortfolioController(ILogger<PortfolioController> logger)
-        //{
-        //    _logger = logger;
-        //}
-
-        public IActionResult Index()
+	    public IActionResult Index()
         {
             return View();
         }
