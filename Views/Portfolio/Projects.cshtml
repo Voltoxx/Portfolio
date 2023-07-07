@@ -21,6 +21,9 @@
 					@*@Html.DisplayFor(modelItem => item.ImagePrincipale)*@
 					<img alt="Image de @item.Title" src="@item.ImagePrincipale"/>
 				</td>
+				<td>
+					<a href="@Url.Action("Details", "Portfolio", new { id = item.Id })">View Details</a>
+				</td>
 			</tr>
 		}
 	</tbody>

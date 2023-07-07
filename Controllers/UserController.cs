@@ -64,7 +64,7 @@ namespace Portfolio.Controllers
 
 		public ActionResult Logout()
 		{
-			string token = _authenticationService.GetUser().CookieValue;
+			string token = _authenticationService.GetUser()!.CookieValue;
 			Users user = _userRepository.GetUserConnected(token);
 			_userRepository.Logout(user);
 			_authenticationService.DeleteCookie();

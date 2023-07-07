@@ -24,6 +24,12 @@ namespace Portfolio.Controllers
             return View(GetAllProjects());
         }
 
+        public IActionResult Details(int id)
+        {
+	        Projets model = GetOneProject(id);
+	        return View(model);
+        }
+
         public IActionResult Manage()
         {
             return View(GetAllProjects());

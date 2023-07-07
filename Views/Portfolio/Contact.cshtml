@@ -1,8 +1,48 @@
-﻿
+﻿@*A modifier par le model de contact lorsque celui ci sera créé *@
+@model Portfolio.Models.Projets
+
 @{
     ViewData["Title"] = "Contact";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Contact</h1>
 
+<h1>Contact</h1>
+<h4>Des questions ? Une demande particulière ? N’hesitez pas à me contacter, je prendrai avec plaisir et beaucoup de sérieux votre demande !</h4>
+
+<div class="row">
+	<div class="col-md-4">
+		<form asp-action="UpdateOneProject">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Id" />
+			<div class="form-group">
+				<label asp-for="Title" class="control-label"></label>
+				<input asp-for="Title" class="form-control" />
+				<span asp-validation-for="Title" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Description" class="control-label"></label>
+				<input asp-for="Description" class="form-control" />
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="ImagePrincipale" class="control-label"></label>
+				<input asp-for="ImagePrincipale" class="form-control" />
+				<span asp-validation-for="ImagePrincipale" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="FirstImage" class="control-label"></label>
+				<input asp-for="FirstImage" class="form-control" />
+				<span asp-validation-for="FirstImage" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="SecondImage" class="control-label"></label>
+				<input asp-for="SecondImage" class="form-control" />
+				<span asp-validation-for="SecondImage" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Envoyer" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
+</div>

@@ -22,23 +22,52 @@ body {
 }
 
 main {
-    height: 100vh;
+    height: auto;
 }
 
 footer{
     padding-top : 25px;
 }
 
-/*Page profil*/
-
-div .presentation {
-    float : left;
-    text-align : center;
-    width: 1440px;
-    background-color: #AEAEAE;
+.btn {
+    margin-top: 25px;
 }
+
+/*Page profil*/
 
 .pdp{
     width : 20%;
-    height : 10%;
+}
+
+.git {
+    width: 4%;
+}
+
+.link {
+   width: 8.5%;
+}
+
+.justify-content-around{
+    display : flex;
+    justify-content : space-around;
+}
+
+.sous-titre{
+    margin-top: 100px;
+    margin-bottom : 50px;
+}
+
+.cv{
+    margin-top:100px;   
+    margin-bottom: 50px;
+}
+
+/*Index*/
+
+.photodeprofil{
+    width:30%;
+}
+
+.boutonindex{
+    margin-bottom: 25px;
 }
